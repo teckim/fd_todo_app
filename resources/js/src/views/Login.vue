@@ -32,7 +32,7 @@
           Log In
         </button>
         <p class="text-sm text-slate-400">
-          Already have an account?
+          Don't have an account?
           <router-link
             class="text-primary-500 underline underline-offset-4"
             to="/signup"
@@ -47,7 +47,8 @@
 <script setup>
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
-import { login } from "@/modules/auth";
+import { login } from "@/services/auth";
+import http from "@/modules/http"
 
 const router = useRouter();
 const state = reactive({ email: null, error: null });
@@ -58,10 +59,10 @@ function onLoginClick() {
   login(state.email)
     .then(({ data }) => {
       localStorage.setItem("email", data.email);
+      http.defaults.headers.common['X-Email'] = state.email
       router.push("/");
     })
     .catch((e) => {
-      console.log(e);
       state.error =
         e?.response?.data?.message || "There's no user with that email";
     });

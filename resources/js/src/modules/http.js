@@ -10,8 +10,8 @@ http.interceptors.response.use(
     if (error.response.status === 401) {
       localStorage.removeItem('user');
       localStorage.removeItem('jwt');
-      console.log('401')
-      // window.location = '/login';
+
+      window.location = '/login';
     }
 
     return Promise.reject(error);

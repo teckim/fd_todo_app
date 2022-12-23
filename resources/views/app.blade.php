@@ -11,7 +11,7 @@
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="antialiased">
+<body class="antialiased text-slate-700">
     <div id="app"></div>
 
     @vite('resources/js/app.js')

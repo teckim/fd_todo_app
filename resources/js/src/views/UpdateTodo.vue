@@ -56,11 +56,12 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
-import { postTodo } from "@/services/todo";
+import { onMounted, reactive } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { updateTodo, getTodoById } from "@/services/todo";
 
 const router = useRouter();
+const route = useRoute();
 const state = reactive({
   error: null,
   todo: {
@@ -70,8 +71,14 @@ const state = reactive({
   },
 });
 
+onMounted(() => {
+  getTodoById(route.params.id)
+    .then(({ data }) => (state.todo = data))
+    .finally(() => (state.loading = false));
+});
+
 function onSaveClick() {
-  postTodo(state.todo)
+  updateTodo(route.params.id, state.todo)
     .then(() => {
       router.push("/");
     })

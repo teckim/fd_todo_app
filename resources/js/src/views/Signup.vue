@@ -1,23 +1,28 @@
 <template>
   <div class="h-screen flex justify-center items-center">
-    <div class="flex flex-col gap-y-12">
+    <div class="w-full max-w-xs flex flex-col gap-y-12">
       <div class="text-center">
         <h1 class="text-2xl uppercase font-bold">Welcome</h1>
         <span class="text-slate-500 text-sm">Never miss a ToDo with us</span>
       </div>
       <form class="flex flex-col gap-y-2">
-        <input
-          class="
-            w-64
-            mb-2
-            bg-slate-100
-            rounded-md
-            hover:ring-primary-500 hover:border-primary-500
-          "
-          name="email"
-          type="email"
-          placeholder="example@email.com"
-        />
+        <div class="mb-2">
+          <input
+            v-model="state.email"
+            class="
+              w-full
+              bg-slate-100
+              rounded-md
+              hover:ring-primary-500 hover:border-primary-500
+            "
+            name="email"
+            type="email"
+            placeholder="example@email.com"
+          />
+          <p v-if="state.error" class="text-sm text-red-400">
+            {{ state.error }}
+          </p>
+        </div>
         <button
           class="rounded-md px-3 py-2 bg-primary-500 text-slate-100"
           @click.prevent="onSignupClick"
@@ -25,7 +30,7 @@
           Sign Up
         </button>
         <p class="text-sm text-slate-400">
-          Don't have an account?
+          Already have an account?
           <router-link
             class="text-primary-500 underline underline-offset-4"
             to="/login"
@@ -39,11 +44,22 @@
 
 <script setup>
 import { reactive } from "vue";
-import { signup } from "@/modules/auth";
+import { useRouter } from "vue-router";
+import { signup } from "@/services/auth";
+import http from "@/modules/http";
 
-const state = reactive({ email: "" });
+const router = useRouter();
+const state = reactive({ email: null, error: null });
 
 function onSignupClick() {
-  signup(state.email);
+  signup(state.email)
+    .then(({ data }) => {
+      localStorage.setItem("email", data.email);
+      http.defaults.headers.common["X-Email"] = data.email;
+      router.push("/");
+    })
+    .catch((e) => {
+      state.error = e?.response?.data?.message;
+    });
 }
 </script>
