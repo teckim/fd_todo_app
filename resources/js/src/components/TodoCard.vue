@@ -1,17 +1,17 @@
 <template>
-  <div class="flex bg-white rounded-md p-2">
-    <div class="flex gap-x-2 flex-grow">
+  <div class="bg-white rounded-md p-2">
+    <div class="flex gap-x-2">
       <div class="self-center">
         <sortIcon class="w-5 text-slate-400" />
       </div>
-      <div class="overflow-hidden flex-grow">
+      <div class="overflow-hidden">
         <h2
           class="leading-none"
           :class="done && 'line-through decoration-secondary-400'"
         >
           {{ title }}
         </h2>
-        <p class="text-sm truncate text-slate-500">{{ description }}</p>
+        <div class="text-sm truncate text-slate-500">{{ description }}</div>
         <span class="text-xs text-slate-400">Due on {{ dueDate }}</span>
         <div class="mt-2 flex gap-x-2 just">
           <button

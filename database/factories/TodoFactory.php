@@ -21,22 +21,10 @@ class TodoFactory extends Factory
         $user = User::inRandomOrder()->first();
 
         return [
-            'title' => fake()->realText(80),
+            'title' => fake()->realText(20),
             'description' => fake()->realText(),
             'due_date' => fake()->date(),
             'user_id' => $user->id
         ];
-    }
-
-    /**
-     * Configure the model factory.
-     *
-     * @return $this
-     */
-    public function configure()
-    {
-        return $this->afterMaking(function (Todo $todo) {
-            $todo->assignNextPosition(); 
-        });
     }
 }

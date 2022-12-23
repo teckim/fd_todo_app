@@ -24,7 +24,7 @@ class UpdateTodoRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:80',
+            'title' => 'required|max:20',
             'done' => 'boolean'
         ];
     }
