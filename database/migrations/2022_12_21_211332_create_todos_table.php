@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->boolean('done')->default(0);
+            $table->integer('position')->unsigned()->index();
             $table->timestamp('due_date')->nullable();
             $table->timestamps();
 

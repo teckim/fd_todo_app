@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use App\Models\Todo;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Todo>
@@ -25,5 +26,17 @@ class TodoFactory extends Factory
             'due_date' => fake()->date(),
             'user_id' => $user->id
         ];
+    }
+
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterMaking(function (Todo $todo) {
+            $todo->assignNextPosition(); 
+        });
     }
 }

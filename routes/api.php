@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TodoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,15 +12,17 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
-use App\Http\Controllers\TodoController;
-use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'signup']);
 
-Route::put('/todos/{id}/done', [TodoController::class, 'done']);
-Route::apiResources([
-    'todos' => TodoController::class,
-]);
+Route::middleware(['auth'])->group(function () {
+    Route::put('/todos/{id}/done', [TodoController::class, 'done']);
+    Route::put('/todos/{id}/move', [TodoController::class, 'move']);
+    Route::apiResources([
+        'todos' => TodoController::class,
+    ]);
+});

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -17,7 +18,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user == null) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
+            return response()->json(['error' => 'Unauthenticated.'], 402);
         }
 
         return $user;
@@ -28,7 +29,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function signup(AuthRequest $request)
+    public function signup(StoreUserRequest $request)
     {
         $user = new User($request->all());
         $user->save();

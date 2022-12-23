@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Todo;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoRequest;
+use App\Models\Todo;
+use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
@@ -14,9 +14,10 @@ class TodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Todo::all();
+        return $request->user->todos()->orderBy('position', 'asc')->get();
+        // return Todo::all();
     }
 
     /**
@@ -28,6 +29,7 @@ class TodoController extends Controller
     public function store(StoreTodoRequest $request)
     {
         $todo = new Todo($request->all());
+        $todo->user_id = $request->user->id;
         $todo->save();
 
         return $todo;
@@ -39,9 +41,11 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Todo $todo)
+    public function show(Request $request, $id)
     {
-        return $todo;
+        return Todo::where('id', $id)
+            ->where('user_id', $request->user->id)
+            ->firstOrFail();
     }
 
     /**
@@ -51,8 +55,12 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTodoRequest $request, Todo $todo)
+    public function update(UpdateTodoRequest $request, $id)
     {
+        $todo = Todo::where('id', $id)
+            ->where('user_id', $request->user->id)
+            ->firstOrFail();
+
         return $todo->update($request->all());
     }
 
@@ -62,8 +70,12 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Todo $todo)
+    public function destroy(Request $request, $id)
     {
+        $todo = Todo::where('id', $id)
+            ->where('user_id', $request->user->id)
+            ->firstOrFail();
+
         return $todo->delete();
     }
 
@@ -73,12 +85,25 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function done(UpdateTodoRequest $request, $todo_id)
+    public function done(Request $request, $todo_id)
     {
         $todo = Todo::findOrFail($todo_id);
         $todo->done = $request["done"];
         $todo->save();
 
         return $todo;
+    }
+
+    public function move(Request $request, $todo_id)
+    {
+        $new_position = $request->new_position;
+
+        $todo = Todo::where('id', $todo_id)
+            ->where('user_id', $request->user->id)
+            ->firstOrFail();
+
+        $todo->move($new_position);
+
+        return ['todo' => $todo];
     }
 }

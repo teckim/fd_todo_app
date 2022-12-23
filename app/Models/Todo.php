@@ -4,19 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
+use Nevadskiy\Position\HasPosition;
 
 class Todo extends Model
 {
-    use HasFactory;
-
+    use HasPosition, HasFactory;
     /**
-     * The attributes that should be cast.
+     * The attributes that are mass assignable.
      *
-     * @var array<string, string>
+     * @var array<int, string>
      */
-    protected $casts = [
-        'due_date' => 'datetime',
+    protected $fillable = [
+        'title',
+        'description',
+        'due_date'
     ];
+
+
+    public function getDueDateAttribute($value)
+    {
+        return (new Carbon($value))->toFormattedDateString();
+    }
 
     public function user()
     {

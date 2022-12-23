@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a6e1eac7cb089d9d75239328a0fd60e",
+    "content-hash": "bce514e693f10c327fe18792d521bca5",
     "packages": [
         {
             "name": "brick/math",
@@ -1896,6 +1896,60 @@
                 "source": "https://github.com/nette/utils/tree/v3.2.8"
             },
             "time": "2022-09-12T23:36:20+00:00"
+        },
+        {
+            "name": "nevadskiy/laravel-position",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nevadskiy/laravel-position.git",
+                "reference": "a4d9ac276a239e0750c926b20a6858deac94f3e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nevadskiy/laravel-position/zipball/a4d9ac276a239e0750c926b20a6858deac94f3e9",
+                "reference": "a4d9ac276a239e0750c926b20a6858deac94f3e9",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^7.0|^8.0|^9.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "nevadskiy/php-cs-fixer-rules": "dev-master",
+                "orchestra/testbench": "^5.0|^6.0|^7.0",
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nevadskiy\\Position\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nevadskiy",
+                    "email": "nevadskiy@gmail.com"
+                }
+            ],
+            "description": "The package allows you to arrange the laravel models in a given order.",
+            "keywords": [
+                "arrange",
+                "eloquent",
+                "laravel",
+                "order",
+                "position",
+                "sort"
+            ],
+            "support": {
+                "issues": "https://github.com/nevadskiy/laravel-position/issues",
+                "source": "https://github.com/nevadskiy/laravel-position/tree/0.4.0"
+            },
+            "time": "2022-05-08T16:01:45+00:00"
         },
         {
             "name": "nikic/php-parser",
