@@ -6,7 +6,7 @@
         {{ state.error }}
       </p>
     </div>
-    <form class="flex flex-col gap-y-3">
+    <form class="max-w-md flex flex-col gap-y-3">
       <div class="flex flex-col">
         <div class="text-sm">Title</div>
         <input
